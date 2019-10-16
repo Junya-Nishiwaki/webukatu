@@ -1,0 +1,8 @@
+.container {
+  margin: 0 auto;
+  max-width: 980px;
+  padding: 100px 50px;
+}
+textarea {
+  width: 100%;
+}
