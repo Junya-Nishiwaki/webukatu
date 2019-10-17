@@ -22,8 +22,8 @@ $('.valid-email').keyup(function() {
   if ($(this).val().length === 0) {
     form_g.removeClass('has-success').addClass('has-error');
     form_g.find('.help-block').text(MSG_EMPTY);
-  } else if ($(this).val().length > 50 || !$(this).val().match(/^[a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9\._-])+([a-zA-Z0-9\._-]+)+$/) {
-    form_g.removeClass('.has-success').addClass('.has-error');
+  } else if ($(this).val().length > 50 || !$(this).val().match(/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9\._-])+([a-zA-Z0-9\._-]+)+$/)) {
+    form_g.removeClass('has-success').addClass('has-error');
     form_g.find('.help-block').text(MSG_EMAIL_TYPE);
   } else {
     form_g.removeClass('has-error').addClass('has-success');
@@ -38,7 +38,7 @@ $('.valid-textarea').keyup(function() {
     form_g.removeClass('has-success').addClass('has-error');
     form_g.find('.help-block').text(MSG_EMPTY);
   } else if ($(this).val().length > 100) {
-    form_g.removeClass('.has-success').addClass('.has-error');
+    form_g.removeClass('has-success').addClass('has-error');
     form_g.find('.help-block').text(MSG_TEXTAREA_MAX);
   } else {
     form_g.removeClass('has-error').addClass('has-success');
