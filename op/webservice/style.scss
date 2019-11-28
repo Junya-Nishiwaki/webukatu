@@ -1,0 +1,145 @@
+body {
+  margin: 0;
+  padding: 0;
+  color: #444;
+}
+h1, h2, h3, h4, h5, h6, p, ul {
+  margin: 0;
+  padding: 0;
+}
+.container {
+  width: 980px;
+  margin: 0 auto;
+}
+
+/* Header */
+header {
+  width: 100%;
+  background: #666;
+  .container {
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h1 {
+      a {
+        color: #b6a489;
+        text-decoration: none;
+      }
+    }
+    ul {
+      list-style: none;
+      display: flex;
+      li {
+        margin-left: 30px;
+        a {
+          color: #fff;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+// Login, Signup
+.form-area {
+  border: 3px solid #F1F1F1;
+  width: 500px;
+  margin: 50px auto 0;
+  padding: 40px;
+  box-sizing: border-box;
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  form {
+    overflow: hidden;
+    .err {
+      color: red;
+    }
+    label {
+      margin-bottom: 15px;
+    }
+    input {
+      width: 100%;
+      height: 50px;
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px 0 30px;
+      background: #f6f5f5;
+      border: none;
+      box-sizing: border-box;
+    }
+    .checkbox {
+      display: flex;
+      text-align: left;
+    }
+    input[type='submit'] {
+      width: 150px;
+      background: brown;
+      color: #fff;
+      float: right;
+      cursor: pointer;
+      margin: 0;
+    }
+  }
+}
+
+// Mypage
+.mypage {
+  display: flex;
+  justify-content: space-between;
+  margin: 50px auto;
+  .edit-form {
+    border: 3px solid #F1F1F1;
+    padding: 50px;
+    overflow: hidden;
+    input {
+      height: 50px;
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px 0 30px;
+      background: #f6f5f4;
+      width: 100%;
+      border: none;
+      box-sizing: border-box;
+    }
+    input[type='submit'] {
+      width: 150px;
+      background: brown;
+      color: #fff;
+      float: right;
+      cursor: pointer;
+      margin: 0;
+    }
+  }
+  .side-bar {
+    background: #f6f5f4;
+    padding: 30px;
+    margin-left: 20px;
+    ul {
+      list-style: none;
+      li {
+        margin-bottom: 15px;
+        a {
+          text-decoration: none;
+          color: #444;
+          transition: .3s;
+          &:hover {
+            opacity: .5;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Footer
+footer {
+  width: 100%;
+  background: #666;
+  text-align: center;
+  color: #fff;
+  height: 100px;
+  line-height: 100px;
+}
