@@ -12,6 +12,7 @@ session_start();
 session_regenerate_id();// DB接続
 
 // 定数管理
+define('MAX_FILE_SIZE', 1 * 1024 * 1024);
 define("MSG1", '入力内容が正しくありません');
 define("MSG2", 'パスワードが正しく入力されていません');
 define("MSG3", '既に登録済みのメールアドレスです');
@@ -22,6 +23,7 @@ $err_msg = [];
 function h($s) {
   return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
 }
+
 function dbConnect() {
   $dsn = 'mysql:dbname=output1;host=localhost;charset=utf8';
   $user = 'root';
@@ -42,7 +44,45 @@ function dbConnect() {
 
 function queryPost($dbh, $sql, $data) {
   $stmt = $dbh->prepare($sql);
-  $stmt->execute($data);
-
+  if (!$stmt->execute($data)) {
+    return false;
+  }
   return $stmt;
+}
+
+// Password reminder
+function random ($length = 6) {
+    return substr(str_shuffle(str_repeat('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', $length)), 0, $length);
+}
+
+// Upload image
+function uploadImg($file, $key) {
+  try {
+    if (isset($file['error']) && is_int($file['error'])) {
+      switch ($_FILES['pic']['error']) {
+        case UPLOAD_ERR_OK: // OK
+        break;
+        case UPLOAD_ERR_NO_FILE:   // ファイル未選択の場合
+        throw new RuntimeException('ファイルが選択されていません');
+        case UPLOAD_ERR_INI_SIZE:  // php.ini定義の最大サイズが超過した場合
+        case UPLOAD_ERR_FORM_SIZE: // フォーム定義の最大サイズ超過した場合
+        throw new RuntimeException('ファイルサイズが大きすぎます');
+        default: // その他の場合
+        throw new RuntimeException('その他のエラーが発生しました');
+      }
+
+      $type = @exif_imagetype($file['tmp_name']);
+      if (!in_array($type, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG], true)) {
+        throw new RuntimeException('画像形式が未対応です');
+      }
+
+      $file = 'upload/' . $_FILES['pic']['name'];
+      if (move_uploaded_file($_FILES['pic']['tmp_name'], $file)) {
+
+      }
+    }
+  } catch (PDOException $e) {
+    $e->getMessage();
+    exit;
+  }
 }

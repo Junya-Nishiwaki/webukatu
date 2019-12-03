@@ -8,11 +8,16 @@ if (!empty($_POST)) {
     $sql = 'SELECT email FROM users WHERE email = :email AND delete_flg = 0';
     $data = [':email' => $_POST['email']];
     $stmt = queryPost($dbh, $sql, $data);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (empty($stmt->fetch(PDO::FETCH_ASSOC))) {
+    if (empty($result)) {
       $dbh = dbConnect();
-      $sql = 'INSERT INTO users (email, password) VALUES (:email, :password)';
-      $data = [':email' => $_POST['email'], ':password' => password_hash($_POST['password'], PASSWORD_DEFAULT)];
+      $sql = 'INSERT INTO users (email, password, created_at) VALUES (:email, :password, :created_at)';
+      $data = [
+        ':email' => $_POST['email'],
+        ':password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+        ':created_at' => date('Y-m-d H:i:s')
+      ];
       $stmt = queryPost($dbh, $sql, $data);
 
       if ($stmt) {

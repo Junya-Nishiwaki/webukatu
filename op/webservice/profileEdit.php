@@ -4,8 +4,10 @@ require('auth.php');
 
 if (!empty($_POST)) {
   try {
+    $pic = (!empty($_FILES['pic']['name'])) ? uploadImg($_FILES['pic'], 'pic') : '';
+    $pic = '';
     $dbh = dbConnect();
-    $sql = 'UPDATE users SET name = :name, tel = :tel, zip = :zip, address = :address, age = :age, email = :email WHERE id = :id AND delete_flg = 0';
+    $sql = 'UPDATE users SET name = :name, tel = :tel, zip = :zip, address = :address, age = :age, email = :email, pic = :pic WHERE id = :id AND delete_flg = 0';
     $data = [
       ':name' => $_POST['name'],
       ':tel' => $_POST['tel'],
@@ -41,7 +43,7 @@ require('components/header.php');
 ?>
 <main id='profileEdit'>
 <div class="container mypage">
-  <form class='edit-form' method="post">
+  <form class='edit-form' method="post" enctype="multipart/form-data">
     <h1>Profile edit</h1>
     <p class='suc'><?php if (!empty($suc_msg)) echo $suc_msg['common'] ?></p>
 
@@ -71,7 +73,8 @@ require('components/header.php');
 
     <!-- Picture -->
     <label for="pic">Picture</label>
-    <input type="file" name="pic" enctype='multipart/form-data' value="">
+    <input type="hidden" name="MAX_FILE_SIZE" value="<?= h(MAX_FILE_SIZE) ?>">
+    <input type="file" name="pic">
 
     <input type="submit" value="Preserve">
   </form>
