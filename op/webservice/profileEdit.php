@@ -4,8 +4,7 @@ require('auth.php');
 
 if (!empty($_POST)) {
   try {
-    $pic = (!empty($_FILES['pic']['name'])) ? uploadImg($_FILES['pic'], 'pic') : '';
-    $pic = '';
+    $pic = (!empty($_FILES['pic']['name'])) ? uploadImg($_FILES['pic']) : '';
     $dbh = dbConnect();
     $sql = 'UPDATE users SET name = :name, tel = :tel, zip = :zip, address = :address, age = :age, email = :email, pic = :pic WHERE id = :id AND delete_flg = 0';
     $data = [
@@ -15,6 +14,7 @@ if (!empty($_POST)) {
       ':address' => $_POST['address'],
       ':age' => $_POST['age'],
       ':email' => $_POST['email'],
+      ':pic' => $pic,
       ':id' => $_SESSION['user_id']
     ];
     $stmt = queryPost($dbh, $sql, $data);
@@ -72,9 +72,12 @@ require('components/header.php');
     <input type="email" name="email" value="<?php if (!empty($_POST)) {echo $_POST['email'];} else {echo h($result['email']);} ?>">
 
     <!-- Picture -->
-    <label for="pic">Picture</label>
-    <input type="hidden" name="MAX_FILE_SIZE" value="<?= h(MAX_FILE_SIZE) ?>">
-    <input type="file" name="pic">
+    <p>Picture</p>
+    <div class="img-box">
+      <input type="hidden" name="MAX_FILE_SIZE" value="<?= h(MAX_FILE_SIZE) ?>">
+      <input type="file" name="pic" class="live-preview">
+      <img src="" class='img-preview'>
+    </div>
 
     <input type="submit" value="Preserve">
   </form>

@@ -56,7 +56,7 @@ function random ($length = 6) {
 }
 
 // Upload image
-function uploadImg($file, $key) {
+function uploadImg($file) {
   try {
     if (isset($file['error']) && is_int($file['error'])) {
       switch ($_FILES['pic']['error']) {
@@ -76,10 +76,13 @@ function uploadImg($file, $key) {
         throw new RuntimeException('画像形式が未対応です');
       }
 
-      $file = 'upload/' . $_FILES['pic']['name'];
-      if (move_uploaded_file($_FILES['pic']['tmp_name'], $file)) {
-
+      $path = 'upload/' . sha1_file($file['tmp_name']) . image_type_to_extension($type);
+      if (!move_uploaded_file($file['tmp_name'], $path)) {
+        throw new RuntimeException('ファイル保存時にエラーが発生しました');
       }
+
+      chmod($path, 0644);
+      return $path;
     }
   } catch (PDOException $e) {
     $e->getMessage();
