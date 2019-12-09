@@ -41,6 +41,33 @@ header {
   }
 }
 
+// index.php
+.main-display {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+  .side-bar {
+    width: 20%;
+    background: rgb(226, 215, 179);
+    padding: 30px 10px;
+  }
+  .main-wrapper {
+    width: 70%;
+    .products-area {
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      .product-area {
+        width: 30%;
+        margin-right: 3%;
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
 // Login, Signup
 .form-area {
   border: 3px solid #F1F1F1;

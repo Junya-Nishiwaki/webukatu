@@ -42,7 +42,7 @@ function dbConnect() {
   return $dbh;
 }
 
-function queryPost($dbh, $sql, $data) {
+function queryPost($dbh, $sql, $data = []) {
   $stmt = $dbh->prepare($sql);
   if (!$stmt->execute($data)) {
     return false;
@@ -59,7 +59,7 @@ function random ($length = 6) {
 function uploadImg($file) {
   try {
     if (isset($file['error']) && is_int($file['error'])) {
-      switch ($_FILES['pic']['error']) {
+      switch ($file['error']) {
         case UPLOAD_ERR_OK: // OK
         break;
         case UPLOAD_ERR_NO_FILE:   // ファイル未選択の場合
