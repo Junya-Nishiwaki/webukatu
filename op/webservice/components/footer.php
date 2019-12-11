@@ -10,10 +10,9 @@ $(function() {
 
 // Footer最下部表示
 let $ftr = $('#footer');
-if( window.innerHeight > $ftr.offset().top + $ftr.outerHeight() ){
+if (window.innerHeight > $ftr.offset().top + $ftr.outerHeight()) {
     $ftr.attr({'style': 'position:fixed; top:' + (window.innerHeight - $ftr.outerHeight()) +'px;' });
-  }
-});
+}
 
 // 画像ライブプレビュー
 let $imgBox = $('.img-box');
@@ -21,12 +20,12 @@ $imgBox.on('dragover', function(e) {
   e.stopPropagation();
   e.preventDefault();
   $(this).css('border', '3px dashed #ccc');
-})
+});
 $imgBox.on('dragleave', function(e) {
   e.stopPropagation();
   e.preventDefault();
   $(this).css('border', 'none');
-})
+});
 $('.live-preview').on('change', function(e) {
   $imgBox.css('border', 'none');
   let file = this.files[0],
@@ -38,7 +37,18 @@ $('.live-preview').on('change', function(e) {
   }
 
   fileReader.readAsDataURL(file);
+});
+
+// 画像切替
+let array = [];
+$('.js-changeImg-sub').on('click', function() {
+  array[0] = $(this).attr('src');
+  array[1] = $('#js-changeImg-main').attr('src');
+  $(this).attr('src', array[1]);
+  $('#js-changeImg-main').attr('src', array[0]);
 })
+
+});
 </script>
 </body>
 </html>

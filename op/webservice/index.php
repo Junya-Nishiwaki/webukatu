@@ -1,10 +1,29 @@
 <?php
 require('function.php');
 
+
 try {
   $dbh = dbConnect();
   $sql = 'SELECT products.id, products.name AS productName, price, pic1, categories.name AS categoryName FROM products INNER JOIN categories ON products.category_id = categories.id';
-  $stmt = queryPost($dbh, $sql);
+  $sql2 = 'SELECT count(*) FROM products';
+
+  $sort = '';
+  $category_sort = '';
+  $data= [];
+  if (!empty($_POST['category'])) {
+    $sql .= ' WHERE category_id = :category_id';
+    $sql2 .= ' WHERE category_id = :category_id';
+    $data = [':category_id' => $_POST['category']];
+  }
+
+  if (!empty($_POST['sort']) && $_POST['sort'] === '1') {
+    $sql .= ' ORDER BY price';
+  } elseif (!empty($_POST['sort']) && $_POST['sort'] === '2') {
+    $sql .= ' ORDER BY price DESC';
+  }
+  $stmt = queryPost($dbh, $sql, $data);
+  $stmt2 = queryPost($dbh, $sql2, $data);
+  $count = $stmt2->fetch(PDO::FETCH_ASSOC);
 
   if ($stmt) {
     $results = $stmt->fetchAll();
@@ -15,9 +34,6 @@ try {
   $stmt = queryPost($dbh, $sql, $data);
   $categories = $stmt->fetchAll();
 
-  $sql = 'SELECT count(*) FROM products';
-  $stmt = queryPost($dbh, $sql);
-  $count = $stmt->fetch(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
   $e->getMessage();
@@ -32,16 +48,17 @@ require('components/header.php');
   <div class="side-bar">
     <form method='post'>
       <label for='categories'>カテゴリー</label>
-      <select name="" id="categories">
-        <option value="">選択して下さい</option>
+      <select name="category" id="categories">
+        <option value='0'>選択して下さい</option>
         <?php foreach ($categories as $category) : ?>
           <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
         <?php endforeach ?>
       </select><br>
       <label for="sort">表示順</label><br>
-      <select name="" id="categories">
-        <option value="">選択して下さい</option>
-        <option value="0">新しい順</option>
+      <select name="sort" id="sort">
+        <option value='0'>選択して下さい</option>
+        <option value="1">安価順</option>
+        <option value="2">高価順</option>
       </select><br>
       <input type="submit" value='検索'>
     </form>
