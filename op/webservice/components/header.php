@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Free Market | <?= $siteTitle ?></title>
   <link rel="stylesheet" href="style.min.css">
+  <link rel="stylesheet" href="components/icofont/icofont.min.css">
 </head>
 <body>
 <!-- Header -->

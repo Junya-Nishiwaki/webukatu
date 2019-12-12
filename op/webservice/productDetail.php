@@ -51,6 +51,7 @@ require('components/header.php');
 <main id='productDetail'>
 <div class="container">
 <p class='product-title'><span class='category-tag'><?= h($results['categoryName']) ?></span><?= h($results['productName']) ?></p>
+<i class="icofont-heart-alt icn-like js-click-like" data-productid='<?= h($results['productId']) ?>'></i>
 <div class="product-detail">
   <div class="main-img">
     <img src="<?= $pic1 ?>" id='js-changeImg-main'>

@@ -79,6 +79,14 @@ header {
     color: #fff;
   }
 }
+.icn-like {
+  font-size: 30px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.icn-like.active {
+  color: pink;
+}
 .product-detail {
   display: flex;
   justify-content: space-between;

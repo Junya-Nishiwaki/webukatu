@@ -48,6 +48,20 @@ $('.js-changeImg-sub').on('click', function() {
   $('#js-changeImg-main').attr('src', array[0]);
 })
 
+// お気に入り機能
+let likeProductId = $('.js-click-like').data('productid');
+$('.js-click-like').on('click', function() {
+  let $this = $(this);
+  $.ajax({
+    type: "POST",
+    url: "ajaxLike.php",
+    data: {productId: likeProductId}
+  }).done(function (data) {
+    $this.toggleClass('active');
+  }).fail(function (msg) {
+    console.log('Ajax error!');
+  });
+});
 });
 </script>
 </body>
