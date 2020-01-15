@@ -193,6 +193,22 @@ header {
 }
 
 // Mypage
+#mypage {
+  h1, h2 {
+    text-align: center;
+  }
+  .myProducts {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    .product {
+      width: 30%;
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
 .mypage {
   display: flex;
   justify-content: space-between;
